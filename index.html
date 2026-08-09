@@ -163,6 +163,46 @@ body{background:var(--ink); color:var(--soft);
 .gt-scrim{position:absolute; inset:0; z-index:1;
           background:linear-gradient(0deg, rgba(11,16,21,.92) 0%, rgba(11,16,21,.15) 70%);}
 
+/* ---------- 3D depth layer ----------
+   Pointer-driven perspective tilt. Not a decoration: it gives the flat
+   sections the same spatial logic as the WebGL hero, so the page reads as
+   one object rather than a 3D banner glued to a 2D document. */
+.gt-stage{perspective:1100px; perspective-origin:50% 50%;}
+.gt-tilt{transform-style:preserve-3d; will-change:transform;
+         transition:transform .5s cubic-bezier(.22,.61,.36,1), border-color .5s ease, background .5s ease;}
+.gt-tilt.live{transition:transform .12s linear, border-color .5s ease, background .5s ease;}
+.gt-tilt > *{transform:translateZ(26px);}
+.gt-card i{transform:translateZ(48px);}
+.gt-panel h3{transform:translateZ(38px);} .gt-panel p{transform:translateZ(22px);}
+.gt-sheen{position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0;
+          transition:opacity .45s ease;
+          background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),
+                     rgba(255,255,255,.10), transparent 62%);}
+.gt-tilt:hover .gt-sheen{opacity:1;}
+.gt-card{position:relative; overflow:hidden;}
+
+/* Photographic panels. Image sits behind the existing gradient wash so the
+   type keeps its contrast whatever the picture does. */
+.gt-panel{min-height:300px;}
+.gt-panel .gt-photo{position:absolute; inset:0; z-index:0; background-size:cover;
+        background-position:center center; transform:scale(1.03);
+        transition:transform 1.2s cubic-bezier(.22,.61,.36,1); filter:saturate(.92) contrast(1.02);}
+.gt-panel:hover .gt-photo{transform:scale(1.09);}
+.gt-panel::before{opacity:.55;}
+.gt-panel .gt-scrim{background:linear-gradient(0deg, rgba(11,16,21,.95) 0%,
+        rgba(11,16,21,.62) 45%, rgba(11,16,21,.20) 100%);}
+
+/* About portrait plate */
+.gt-plate{position:relative; border:1px solid var(--line); border-radius:3px; overflow:hidden;
+          min-height:340px;}
+.gt-plate .gt-photo{position:absolute; inset:0; background-size:cover; background-position:center 30%;
+          transform:scale(1.02); transition:transform 1.4s cubic-bezier(.22,.61,.36,1);}
+.gt-plate:hover .gt-photo{transform:scale(1.07);}
+.gt-plate::after{content:''; position:absolute; inset:0;
+          background:linear-gradient(180deg, rgba(11,16,21,.10), rgba(11,16,21,.72));}
+.gt-cap{position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 24px;
+        font-size:12px; letter-spacing:.03em; color:var(--muted); line-height:1.7;}
+
 /* Reveal on scroll */
 .gt-rv{opacity:0; transform:translateY(28px); transition:opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1);}
 .gt-rv.in{opacity:1; transform:none;}
@@ -213,9 +253,10 @@ body{background:var(--ink); color:var(--soft);
       <p class="gt-kicker gt-rise" style="--d:.15s">Gates Foundation &middot; Postsecondary Success</p>
       <h1 class="gt-name gt-rise" style="--d:.32s">Gabriela Torres</h1>
       <p class="gt-role gt-rise" style="--d:.5s">Deputy Director, Transformation at Scale</p>
-      <p class="gt-lede gt-rise" style="--d:.66s">Working with partners across the country to understand, implement,
-         learn from and share evidence-based transformation that leads to success at scale.</p>
-      <a class="gt-cta gt-rise" style="--d:.84s" href="#about">The Work &rarr;</a>
+      <p class="gt-lede gt-rise" style="--d:.66s">One campus improving is a story. Hundreds improving together is a
+         system changing. Her work is the second kind, built with partners across the country on evidence that
+         travels.</p>
+      <a class="gt-cta gt-rise" style="--d:.84s" href="#about">See the work &rarr;</a>
     </div>
   </div>
 </section>
@@ -226,16 +267,19 @@ body{background:var(--ink); color:var(--soft);
     <div class="gt-grid gt-2">
       <div class="gt-rv">
         <p class="gt-eyebrow">About</p>
-        <h2 class="gt-h2">Postsecondary success is<br>a question of mobility.</h2>
+        <h2 class="gt-h2">A degree is a door.<br>Not everyone gets<br>the same key.</h2>
       </div>
       <div class="gt-rv">
         <p class="gt-p">Gabriela Torres is Deputy Director, Transformation at Scale on the Postsecondary Success
-           team at the Gates Foundation. She leads the team in working with partners across the country to
-           understand, implement, learn from and share evidence-based transformation that leads to success at scale.</p>
-        <p class="gt-p dim">The strategy she is responsible for starts from a plain premise: postsecondary success
-           is crucial to economic and social mobility, and it is not acceptable that some students, especially Black,
-           Indigenous, Latinx and low-income students, face specific and systemic barriers that prevent them from
-           realising the full value of postsecondary education.</p>
+           team at the Gates Foundation. She leads a team that works with partners across the country on a
+           four-part discipline: understand what works, implement it, learn from what happens, then share it so
+           the next institution does not start from nothing.</p>
+        <p class="gt-p dim">The premise underneath the strategy is not complicated. Postsecondary success is how
+           economic and social mobility actually happens in this country. And it is not acceptable that some
+           students, especially Black, Indigenous, Latinx and low-income students, meet specific and systemic
+           barriers that keep them from the full value of the education they enrolled in.</p>
+        <p class="gt-p dim">Scale is the hard part. Anything can be made to work once, with enough attention on one
+           campus. Making it hold across many, without the attention, is the problem she was hired to solve.</p>
       </div>
     </div>
   </div>
@@ -244,21 +288,24 @@ body{background:var(--ink); color:var(--soft);
 <!-- ============================ PILLARS ============================ -->
 <section class="gt-sec alt">
   <div class="gt-wrap">
-    <div class="gt-grid gt-3">
-      <div class="gt-card gt-rv">
+    <div class="gt-grid gt-3 gt-stage">
+      <div class="gt-card gt-tilt gt-rv">
         <i class="las la-project-diagram"></i>
-        <h3>Transformation at Scale</h3>
-        <p>Leading a team whose remit is not a single campus but change that holds across many institutions at once.</p>
+        <h3>Change that holds</h3>
+        <p>The remit is not one campus improving. It is change that survives contact with hundreds of institutions
+           that do not resemble each other.</p><span class="gt-sheen"></span>
       </div>
-      <div class="gt-card gt-rv">
+      <div class="gt-card gt-tilt gt-rv">
         <i class="las la-search"></i>
         <h3>Evidence, then practice</h3>
-        <p>Understand, implement, learn from and share. The sequence matters as much as the outcome.</p>
+        <p>Understand, implement, learn from, share. The order is the method. Skip a step and you get a pilot
+           nobody can repeat.</p><span class="gt-sheen"></span>
       </div>
-      <div class="gt-card gt-rv">
+      <div class="gt-card gt-tilt gt-rv">
         <i class="las la-user-graduate"></i>
         <h3>Student affairs at heart</h3>
-        <p>Learnings from student-facing roles still guide the leadership she brings to national strategy.</p>
+        <p>Her own description. Years spent across a desk from students still set the standard the national
+           strategy is measured against.</p>
       </div>
     </div>
   </div>
@@ -269,24 +316,28 @@ body{background:var(--ink); color:var(--soft);
   <div class="gt-wrap">
     <div class="gt-rv" style="max-width:640px; margin-bottom:52px;">
       <p class="gt-eyebrow">Focus</p>
-      <h2 class="gt-h2">What the strategy is actually for.</h2>
+      <h2 class="gt-h2">What the strategy<br>is actually for.</h2>
     </div>
-    <div class="gt-grid gt-2">
-      <article class="gt-panel gt-p1 gt-rv"><span class="gt-scrim"></span>
+    <div class="gt-grid gt-2 gt-stage">
+      <article class="gt-panel gt-p1 gt-tilt gt-rv"><span class="gt-photo" style="background-image:url('img/focus-1.jpg')"></span><span class="gt-scrim"></span><span class="gt-sheen"></span>
         <div><h3>Economic and social mobility</h3>
-        <p>Postsecondary education treated as the mechanism it is, not as an end in itself.</p></div>
+        <p>Education treated as the mechanism it is. The measure is not enrolment. It is what a life looks like
+           afterwards.</p></div>
       </article>
-      <article class="gt-panel gt-p2 gt-rv"><span class="gt-scrim"></span>
+      <article class="gt-panel gt-p2 gt-tilt gt-rv"><span class="gt-photo" style="background-image:url('img/focus-2.jpg')"></span><span class="gt-scrim"></span><span class="gt-sheen"></span>
         <div><h3>Systemic barriers</h3>
-        <p>Named plainly: barriers that fall specifically on Black, Indigenous, Latinx and low-income students.</p></div>
+        <p>Named rather than implied. Barriers that fall specifically on Black, Indigenous, Latinx and low-income
+           students, and that were built, which means they can be unbuilt.</p></div>
       </article>
-      <article class="gt-panel gt-p3 gt-rv"><span class="gt-scrim"></span>
+      <article class="gt-panel gt-p3 gt-tilt gt-rv"><span class="gt-photo" style="background-image:url('img/focus-3.jpg')"></span><span class="gt-scrim"></span><span class="gt-sheen"></span>
         <div><h3>Evidence-based transformation</h3>
-        <p>Change that can be measured, repeated, and handed to the next institution.</p></div>
+        <p>Measured, repeatable, and portable. If it cannot be handed to the next institution, it has not
+           worked yet.</p></div>
       </article>
-      <article class="gt-panel gt-p4 gt-rv"><span class="gt-scrim"></span>
+      <article class="gt-panel gt-p4 gt-tilt gt-rv"><span class="gt-photo" style="background-image:url('img/focus-4.jpg')"></span><span class="gt-scrim"></span><span class="gt-sheen"></span>
         <div><h3>Partners across the country</h3>
-        <p>The work is done with institutions and networks, not delivered to them.</p></div>
+        <p>Done with institutions and networks, not delivered to them. The people closest to the students hold
+           the knowledge.</p></div>
       </article>
     </div>
   </div>
@@ -309,8 +360,8 @@ body{background:var(--ink); color:var(--soft);
       <div class="gt-rv">
         <p class="gt-eyebrow">Path</p>
         <h2 class="gt-h2">From the tutoring table<br>to national strategy.</h2>
-        <p class="gt-p dim">Every role below is one she held before joining the foundation. The order is the point:
-           the strategy work rests on years spent in front of students.</p>
+        <p class="gt-p dim">Every role below is one she held before joining the foundation. Read it in order. The
+           national strategy at the top rests on the tutoring table at the bottom, and she is the one who says so.</p>
       </div>
       <div class="gt-rail gt-rv">
         <div class="gt-step">
@@ -559,6 +610,34 @@ body{background:var(--ink); color:var(--soft);
     }, 2500);
     window.addEventListener('load', function () {
       setTimeout(function () { items.forEach(function (el) { el.classList.add('in'); }); }, 6000);
+    });
+  }
+
+  /* Pointer-driven 3D tilt. Pure CSS transforms, no plugin: MegaOne's tilt
+     library is not part of this demo and a 4KB loop beats a dependency. */
+  var coarse = window.matchMedia('(hover: none)').matches ||
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!coarse) {
+    document.querySelectorAll('.gt-tilt').forEach(function (el) {
+      var raf = null;
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        el.style.setProperty('--mx', (px * 100) + '%');
+        el.style.setProperty('--my', (py * 100) + '%');
+        if (raf) { return; }
+        raf = requestAnimationFrame(function () {
+          raf = null;
+          var ry = (px - 0.5) * 11, rx = (0.5 - py) * 9;
+          el.classList.add('live');
+          el.style.transform = 'perspective(1100px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' +
+                               ry.toFixed(2) + 'deg) translateZ(14px)';
+        });
+      });
+      el.addEventListener('pointerleave', function () {
+        el.classList.remove('live');
+        el.style.transform = '';
+      });
     });
   }
 
