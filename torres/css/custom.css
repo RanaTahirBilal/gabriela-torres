@@ -1,0 +1,147 @@
+/* Gabriela Torres - site overrides. Ink-blue scheme, custom hero, focus grid, quote band. */
+
+:root{
+    --gt-ink:#143A63;
+    --gt-ink-deep:#0C2440;
+    --gt-accent:#C8892F;
+}
+
+html, body { overflow-x: hidden; }
+
+/* ---------- Hero: full-bleed image with an ink gradient, text on the left ---------- */
+.gt-hero{
+    position:relative;
+    overflow:hidden;
+    background:var(--gt-ink-deep);
+}
+.gt-hero-media{
+    position:absolute;
+    inset:0;
+    background-image:url("../images/hero.jpg");
+    background-size:cover;
+    background-position:72% center;
+    background-repeat:no-repeat;
+    z-index:0;
+}
+.gt-hero-media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(100deg,
+        rgba(12,36,64,.97) 0%,
+        rgba(12,36,64,.93) 34%,
+        rgba(12,36,64,.62) 58%,
+        rgba(12,36,64,.28) 100%);
+}
+.gt-hero-inner{ position:relative; z-index:2; }
+
+.gt-eyebrow{
+    color:#9FC0E0;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:13px;
+    margin-bottom:18px;
+}
+.gt-name-accent{ color:#E9B25C !important; }
+.gt-lede{ font-size:19px; line-height:1.65; max-width:640px; }
+.slider-area .content-margin{ margin-bottom:210px; }
+
+.author-skills.bg-red{ background-color:rgba(12,36,64,.90) !important; }
+
+/* ---------- Focus grid ---------- */
+.gt-focus{ padding:110px 0 90px; }
+.gt-focus-grid{ margin-top:46px; }
+.gt-card{
+    height:100%;
+    padding:34px 32px;
+    margin-bottom:30px;
+    background:rgba(20,58,99,.22);
+    border:1px solid rgba(159,192,224,.20);
+    border-left:4px solid var(--gt-accent);
+    border-radius:4px;
+    transition:transform .35s ease, background .35s ease, border-color .35s ease;
+}
+.gt-card:hover{ transform:translateY(-6px); background:rgba(20,58,99,.38); border-color:rgba(233,178,92,.45); }
+.gt-card-icon{ font-size:34px; color:var(--gt-accent); display:block; margin-bottom:14px; }
+.gt-card h5{ font-size:21px; font-weight:700; color:#ffffff; margin-bottom:12px; }
+.gt-card p{ font-size:16px; line-height:1.65; color:rgba(255,255,255,.72); margin-bottom:0; }
+
+/* ---------- Quote band ---------- */
+.gt-quote{ padding:86px 0; }
+.gt-quote-mark{ font-size:44px; color:#E9B25C; display:block; margin-bottom:14px; }
+.gt-quote-text{
+    color:#fff; font-size:34px; line-height:1.4; font-weight:600;
+    margin:0 0 18px; border:0; padding:0;
+}
+.gt-quote-cite{ color:rgba(255,255,255,.72); font-size:15px; margin:0; }
+
+/* ---------- Contact ---------- */
+.gt-contact{ padding:96px 0 60px; }
+.gt-contact .user-img img{ width:170px; height:170px; object-fit:cover; }
+.gt-contact .user-name{ color:#fff; margin-top:20px; }
+.gt-contact .user-designation{ color:rgba(255,255,255,.75); }
+.gt-contact-body .sub-heading{
+    color:#E9B25C; letter-spacing:.16em; text-transform:uppercase; font-size:13px;
+}
+.gt-contact-body .heading{ color:#fff; }
+.gt-contact-note{ color:rgba(255,255,255,.85); font-size:17px; line-height:1.7; max-width:640px; }
+.gt-colophon{ margin-top:56px; padding-top:26px; border-top:1px solid rgba(255,255,255,.18); }
+.gt-colophon p{ color:rgba(255,255,255,.6); font-size:13px; line-height:1.7; }
+
+/* ---------- Path carousel ---------- */
+.gt-path-head{ padding:100px 0 46px; text-align:center; }
+.gt-path-head .sub-heading{ color:var(--gt-accent); letter-spacing:.16em; text-transform:uppercase; font-size:13px; }
+.gt-path-head .heading{ color:#fff; margin:14px 0 16px; }
+.gt-path-head p{ color:rgba(255,255,255,.7); max-width:720px; margin:0 auto; font-size:17px; line-height:1.7; }
+
+/* White overlay type needs a scrim: several of these photographs are bright. */
+.project-sec .project-area .project-img{ position:relative; }
+.project-sec .project-area .project-img::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(90deg,
+        rgba(10,30,54,.93) 0%,
+        rgba(10,30,54,.80) 28%,
+        rgba(10,30,54,.34) 58%,
+        rgba(10,30,54,0) 88%);
+    pointer-events:none;
+}
+.project-sec .project-area .project-detail{ z-index:2; }
+.project-sec .project-area .project-detail .project-text{ opacity:.85; }
+.gt-project-org{
+    color:#E9B25C; letter-spacing:.14em; text-transform:uppercase;
+    font-size:12px; margin-bottom:8px;
+}
+@media (max-width:991px){
+    .project-sec .project-area .project-img::after{
+        background:linear-gradient(180deg, rgba(10,30,54,.35) 0%, rgba(10,30,54,.75) 100%);
+    }
+    .gt-path-head{ padding:70px 0 30px; }
+}
+
+/* ---------- Mobile ---------- */
+@media (hover:none){
+    .gt-hero-media{ background-attachment:scroll; background-size:cover; }
+}
+@media (max-width:991px){
+    .area-heading h1{ font-size:46px; }
+    .gt-lede{ font-size:17px; }
+    .slider-area .content-margin{ margin-bottom:0; }
+    .slider-area{ height:auto; padding:150px 0 60px; }
+    .author-skills{ position:relative; }
+    .gt-quote-text{ font-size:24px; }
+    /* Keep her visible on small screens rather than flattening the photograph to a colour field,
+       while holding enough contrast under the headline. */
+    .gt-hero-media{
+        background-image:url("../images/hero-mob.jpg");
+        background-position:center top;
+    }
+    .gt-hero-media::after{
+        background:linear-gradient(180deg, rgba(12,36,64,.62) 0%, rgba(12,36,64,.80) 38%, rgba(12,36,64,.93) 100%);
+    }
+}
+@media (max-width:575px){
+    .area-heading h1{ font-size:38px; }
+    .gt-quote-text{ font-size:21px; }
+    .gt-focus{ padding:70px 0 50px; }
+}
