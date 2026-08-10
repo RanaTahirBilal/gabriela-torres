@@ -8,6 +8,82 @@
 
 html, body { overflow-x: hidden; }
 
+/* ---------- Header: monogram mark and menu button ----------
+   The mark is set in the site's own typeface rather than a raster file, so it
+   stays sharp on any display and never needs a second asset for retina. */
+.navbar .logo{
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    transition:background-color .35s ease;
+}
+.navbar .logo:hover{ background-color:#1B4B7E !important; }
+
+.gt-mark{
+    font-family:'Montserrat', sans-serif;
+    font-weight:700;
+    font-size:31px;
+    line-height:1;
+    letter-spacing:.16em;
+    text-indent:.16em;          /* optical centring: cancels the trailing letter-space */
+    color:#ffffff;
+    display:block;
+    text-align:center;
+}
+.gt-mark::after{
+    content:"";
+    display:block;
+    width:24px;
+    height:2px;
+    margin:8px auto 0;
+    text-indent:0;
+    background:var(--gt-accent);
+}
+.gt-mark-lg{ font-size:38px; }
+.gt-mark-lg::after{ width:30px; margin-top:10px; }
+
+.gt-menu-logo{ display:inline-block; text-decoration:none; }
+.gt-menu-name{
+    display:block;
+    margin-top:14px;
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+    letter-spacing:.20em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.72);
+}
+
+/* A bare <button> inherits the UA grey fill and outset border. Reset it. */
+.sidemenu_btn#sidemenu_toggle{
+    -webkit-appearance:none;
+    appearance:none;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0;
+    width:34px;
+    height:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:flex-end;
+    cursor:pointer;
+}
+.sidemenu_btn#sidemenu_toggle:focus{ outline:none; }
+.sidemenu_btn#sidemenu_toggle:focus-visible{ outline:2px solid var(--gt-accent); outline-offset:6px; }
+.sidemenu_btn#sidemenu_toggle span{
+    display:block;
+    height:2px;
+    width:100%;
+    margin:0;
+    border-radius:2px;
+    background:#ffffff;
+    transition:width .3s ease, background-color .3s ease;
+}
+.sidemenu_btn#sidemenu_toggle span:nth-child(2){ width:64%; }
+.sidemenu_btn#sidemenu_toggle:hover span{ width:100%; background:var(--gt-accent); }
+
 /* ---------- Hero: full-bleed image with an ink gradient, text on the left ---------- */
 .gt-hero{
     position:relative;
